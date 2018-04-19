@@ -32,7 +32,7 @@ var prepareData = function() {
     // this should ideally be read in from a separate file
     var trials_raw = [
         {question: "How are you today?", option1: "fine", option2: "great", picture: "images/question_mark_01.png"},
-        {question: "What is the weather like?", option1: "shiny", option2: "rainbow", picture: "images/question_mark_02.png"},
+        {question: "What is the weather like?", option1: "shiny", option2: "rainbow", picture: "images/question_mark_02.png"}
     ];
 
     // this should ideally be read in from a separate file

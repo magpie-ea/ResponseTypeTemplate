@@ -115,7 +115,7 @@ var mainTrialView = {
     render : function(CT) {
         var view = {};
         // what part of the progress bar is filled
-        var filled = CT * (180 / exp.views[exp.currentViewCounter].trials);
+        var filled = CT * ($(document).width() / exp.views[exp.currentViewCounter].trials);
         view.name = 'trial',
         view.template = $('#trial-view').html();
         view.response = $('#response').html();

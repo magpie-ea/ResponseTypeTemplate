@@ -74,8 +74,7 @@ button:focus {
 }
 
 .progress-bar-container {
-	float: right;
-	margin: 0 10px 30px 10px;
+	margin: 0 0 100px 0;
 }
 
 .progress-bar-container p {
@@ -87,14 +86,17 @@ button:focus {
 	clear: both;
 }
 
+.trial-view {
+	padding: 0 0 50px 0;
+}
+
 .progress-bar {
-	border: 1px solid #5187BA;
 	height: 12px;
-	width: 180px;
+	width: 100vw;
 }
 
 .progress-bar #filled {
-	background-color: #5187BA;
+	background-color: #FB3B0F;
 	display: block;
 	height: 12px;
 }
