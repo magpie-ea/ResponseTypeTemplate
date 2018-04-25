@@ -1,6 +1,6 @@
 // when the DOM is created and JavaScript code can run safely,
 // the experiment initialisation is called
-$('document').ready(function() {    
+$('document').ready(function() {
     exp.init();
     // prevent scrolling when space is pressed (firefox does it)
     window.onkeydown = function(e) {
@@ -16,7 +16,7 @@ var exp = {};
 var config_views = {};
 
 exp.init = function(){
-	
+
 	// allocate storage room for global and trial data
     this.global_data = {};
     this.trial_data = [];
@@ -24,11 +24,11 @@ exp.init = function(){
     // record current date and time
     this.global_data.startDate = Date();
     this.global_data.startTime = Date.now();
-	
+
 	// call user-defined costumization function
 	exp.customize()
-	
-	// initialize procedure 
+
+	// initialize procedure
 	this.currentViewCounter = 0;
     this.currentTrialCounter = 0;
     this.currentView = this.findNextView();
@@ -43,9 +43,9 @@ exp.findNextView = function() {
     var currentView = this.views[this.currentViewCounter];
     if (this.currentTrialCounter < currentView.trials) {
         this.currentView = currentView.render(this.currentTrialCounter);
-        this.currentTrialCounter ++; 
+		this.currentTrialCounter ++;
     } else {
-        this.currentViewCounter ++; 
+		this.currentViewCounter ++;
         var currentView = this.views[this.currentViewCounter];
         this.currentTrialCounter = 0;
         this.currentView = currentView.render(this.currentTrialCounter);
@@ -58,7 +58,7 @@ exp.submit = function() {
     // adds columns with NA values
     var addEmptyColumns = function(trialData) {
         var columns = [];
-    
+
         for (var i=0; i<trialData.length; i++) {
             for (prop in trialData[i]) {
                 if ((trialData[i].hasOwnProperty(prop)) && (columns.indexOf(prop) === -1)) {
@@ -66,7 +66,7 @@ exp.submit = function() {
                 }
             }
         }
-    
+
         for (var j=0; j<trialData.length; j++) {
             for (var k=0; k<columns.length; k++) {
                 if (!trialData[j].hasOwnProperty(columns[k])) {
@@ -74,9 +74,58 @@ exp.submit = function() {
                 }
             }
         }
-    
+
         return trialData;
-    }; 
+    };
+
+    var formatDebugData = function(data) {
+        var output = "<table>";
+
+        var trials = data.trials;
+        delete data.trials;
+
+        var t = trials[0];
+
+        output += "<thead><tr>";
+
+        for (var kt in t) {
+            if (t.hasOwnProperty(kt)) {
+                output += "<th>" + kt + "</th>";
+            }
+        }
+
+        for (var kd in data) {
+            if (data.hasOwnProperty(kd)) {
+                output += "<th>" + kd + "</th>";
+            }
+        }
+
+        output += "</tr></thead>";
+
+        output += "<tbody><tr>";
+
+        for (var i = 0; i < trials.length; i++) {
+            var currentTrial = trials[i];
+            for (var trialKey in currentTrial) {
+                if (t.hasOwnProperty(trialKey)) {
+                    output += "<td>" + currentTrial[trialKey] + "</td>";
+                }
+            }
+
+            for (var dataKey in data) {
+                if (data.hasOwnProperty(dataKey)) {
+                    output += "<td>" + data[dataKey] + "</td>";
+                }
+            }
+
+            output += "</tr>";
+        }
+
+        output += "</tbody></table>";
+
+        return output;
+    };
+
 
     // construct data object for output
     var data = {
@@ -89,7 +138,7 @@ exp.submit = function() {
     // add more fields depending on the deploy method
     if (config_deploy.is_MTurk) {
         var HITData = getHITData();
-        // MTurk expects a key 'assignmentId' for the submission to work, 
+        // MTurk expects a key 'assignmentId' for the submission to work,
 		// that is why is it not consistent with the snake case that the other keys have
         data['assignmentId'] = HITData['assignmentId'];
         data['workerId'] = HITData['workerId'];
@@ -136,10 +185,9 @@ exp.submit = function() {
         jQuery('<h3/>', {
             text: 'Debug Mode'
         }).appendTo($('.view'));
-        jQuery('<p/>', {
+        jQuery('<div/>', {
             class: 'debug-results',
-            text: JSON.stringify(data)
+            html: formatDebugData(data)
         }).appendTo($('.view'));
     }
 };
-
