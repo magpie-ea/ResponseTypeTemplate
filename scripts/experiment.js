@@ -13,6 +13,7 @@ exp.customize = function() {
                   mainDropdownChoice,
                   instructionsImageSelection,
                   mainImageSelection,
+                  mainKeyPress,
                   postTest,
                   thanks];
 
