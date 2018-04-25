@@ -239,7 +239,7 @@ var instructionsDropdownChoice = {
      // instruction's title
     "title": "Instructions",
     // instruction's text
-    "text": "You completed the first part. In the next part you will choose a word from a dropdown menu.",
+    "text": "You completed yet another part. In the next part you will choose a word from a dropdown menu.",
     // instuction's slide proceeding button text
     "buttonText": "Start dropdown task",
     render: function() {
@@ -310,7 +310,7 @@ var instructionsImageSelection = {
      // instruction's title
     "title": "Instructions",
     // instruction's text
-    "text": "In the next part you will read a sentence and... (choose the picture that better fits the sentence?)",
+    "text": "In the next part you will read a sentence and click on a picture",
     // instuction's slide proceeding button text
     "buttonText": "Start picture task",
     render: function() {
