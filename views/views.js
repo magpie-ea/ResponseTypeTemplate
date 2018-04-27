@@ -398,14 +398,14 @@ var mainKeyPress = {
         $('#filled').css('width', filled);
 
         var handleKeyPress = function(e) {
-            var keyPressed = String.fromCharCode(e.which).toUpperCase();
+            var keyPressed = String.fromCharCode(e.which).toLowerCase();
 
-            if (keyPressed === key1.toUpperCase() || keyPressed === key2.toUpperCase()) {
+            if (keyPressed === key1 || keyPressed === key2) {
                 var corectness;
                 console.log(keyPressed);
                 var RT = Date.now() - startingTime; // measure RT before anything else
 
-                if (exp.trial_info.trials.keyPress[CT].expected === exp.trial_info.trials.keyPress[CT][key1.toLowerCase()]) {
+                if (exp.trial_info.trials.keyPress[CT].expected === exp.trial_info.trials.keyPress[CT][keyPressed.toLowerCase()]) {
                     correctness = 'correct';
                 } else {
                     correctness = 'incorrect';
@@ -415,14 +415,23 @@ var mainKeyPress = {
                     trial_type: "mainKeyPress",
                     trial_number: CT+1,
                     question: exp.trial_info.trials.keyPress[CT].question,
-                    picture: exp.trial_info.trials.keyPress[CT].picture,
                     expected: exp.trial_info.trials.keyPress[CT].expected,
                     key_pressed: keyPressed,
                     correctness: correctness,
                     RT: RT
                 };
+
                 trial_data[key1] = exp.trial_info.trials.keyPress[CT][key1];
                 trial_data[key2] = exp.trial_info.trials.keyPress[CT][key2];
+
+                // question or/and picture are optional
+                if (exp.trial_info.trials.keyPress[CT].picture !== undefined) {
+                    trial_data['picture'] = exp.trial_info.trials.keyPress[CT].picture;
+                }
+
+                if (exp.trial_info.trials.keyPress[CT].question !== undefined) {
+                    trial_data['question'] = exp.trial_info.trials.keyPress[CT].question;
+                } 
 
                 console.log(trial_data);
                 exp.trial_data.push(trial_data);
