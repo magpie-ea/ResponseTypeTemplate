@@ -273,6 +273,8 @@ var mainDropdownChoice = {
         var response;
         $('#main').html(Mustache.render(view.template, {
             question: exp.trial_info.trials.dropdownChoice[CT].question,
+            questionLeftPart: exp.trial_info.trials.dropdownChoice[CT].questionLeftPart,
+            questionRightPart: exp.trial_info.trials.dropdownChoice[CT].questionRightPart,
             option1: exp.trial_info.trials.dropdownChoice[CT].option1,
             option2: exp.trial_info.trials.dropdownChoice[CT].option2,
             picture: exp.trial_info.trials.dropdownChoice[CT].picture

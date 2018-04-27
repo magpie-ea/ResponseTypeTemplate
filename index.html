@@ -192,20 +192,34 @@
 			<img src={{ picture }} alt="a picture" height="100" width="100">
 		</div>
 
-		<p class="question">
-		{{# question }}
-		{{ question }}
-		{{/ question }}
-		</p>
 
+		{{# question }}
 		<p class="answer-container dropdown-container">
+			<p class="question">
+			{{ question }}
 			<select id="response" name="answer">
 				<option disabled selected></option>
 				<option value={{ option1 }}>{{ option1 }}</option>
 				<option value={{ option2 }}>{{ option2 }}</option>
 			</select>
+			</p>
 			<button id="next" class="nodisplay">Next</button>
 		</p>
+		{{/ question }}
+		{{# questionLeftPart }}
+		<p class="answer-container dropdown-container">
+			<p class="question">
+			{{ questionLeftPart }}
+			<select id="response" name="answer">
+				<option disabled selected></option>
+				<option value={{ option1 }}>{{ option1 }}</option>
+				<option value={{ option2 }}>{{ option2 }}</option>
+			</select>
+			{{ questionRightPart }}
+			</p>
+			<button id="next" class="nodisplay">Next</button>
+		</p>
+		{{/ questionLeftPart }}
 
 		</div>
 		</script>
