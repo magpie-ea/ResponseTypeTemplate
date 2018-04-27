@@ -102,7 +102,7 @@
 		  {{/ question }}
 		  </p>
 
-			<p class="answer-container">
+			<p class="answer-container buttons-container">
 				<label for="yes" class="button-answer">{{option1}}</label>
 				<input type="radio" name="answer" id="yes" value={{option1}} />
 				<input type="radio" name="answer" id="no" value={{option2}} />
@@ -141,7 +141,7 @@
 		{{/ question }}
 		</p>
 
-		<p class="answer-container">
+		<p class="answer-container buttons-container">
 			<label for="yes" class="button-answer">{{ option1 }}</label>
 			<input type="radio" name="answer" id="yes" value={{ option1 }} />
 			<input type="radio" name="answer" id="no" value={{ option2 }} />
@@ -169,13 +169,13 @@
 		{{/ question }}
 		</p>
 
-		<p class="answer-container">
+		<p class="answer-container slider-container">
 			<span class="unnatural">{{ option1 }}</span>
 			<input type="range" id="response" class="slider-response" min="0" max="100" value="50"/>
 			<span class="natural">{{ option2 }}</span>
-			<button id="next">Next</button>
-			<p class="help-text nodisplay">Please move the slider before moving to the next page.</p>
 		</p>
+		<button id="next">Next</button>
+		<p class="help-text nodisplay">Please move the slider before moving to the next page.</p>
 
 		</div>
 		</script>
@@ -198,7 +198,7 @@
 		{{/ question }}
 		</p>
 
-		<p class="answer-container">
+		<p class="answer-container dropdown-container">
 			<select id="response" name="answer">
 				<option disabled selected></option>
 				<option value={{ option1 }}>{{ option1 }}</option>
@@ -225,7 +225,7 @@
 		{{/ question }}
 		</p>
 
-		<p class="answer-container">
+		<p class="answer-container imgs-container">
 			<label for="img1" class="img-answer"><img src={{ picture1 }} alt="picture" height="100" width="100"></label>
 			<input type="radio" name="answer" id="img1" value={{  option1 }} />
 			<input type="radio" name="answer" id="img2" value={{ option2 }} />
