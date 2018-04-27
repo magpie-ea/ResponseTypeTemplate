@@ -8,13 +8,13 @@ body {
 
 /* the container where the views are plugged */
 main {
-	max-width: 960px;
-	margin: 0 auto;
 	min-height: 100%;
 }
 
 .view {
 	box-sizing: border-box;
+	max-width: 960px;
+	margin: 0 auto;
 	padding: 50px 0;
 }
 
@@ -265,6 +265,11 @@ input[type="range"]:focus::-moz-range-thumb {
 	margin: 5px 0 0 0;
 }
 
+.thanks-templ {
+	margin: 0 20px;
+	max-width: inherit;
+}
+
 .thanks-templ .debug-results {
 	text-align: left;
 }
@@ -291,4 +296,36 @@ input[type="range"]:focus::-moz-range-thumb {
 	padding: 10px;
 	margin: 10px 5px;
 	text-decoration: none;
+}
+
+.debug-results {
+    overflow-x: scroll;
+}
+
+#debugresults {
+    border-collapse: collapse;
+    font-family: "Lato", "Noto Sans", sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    width: 100%;
+}
+
+#debugresults td, #debugresults th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#debugresults tr:nth-child(even){ 
+    background-color: #f2f2f2;
+}
+
+#debugresults tr:hover {
+    background-color: #ddd;
+}
+
+#debugresults th {
+    background-color: #5187BA;
+    color: white;
+    padding: 15px 8px;
+    text-align: left;
 }
