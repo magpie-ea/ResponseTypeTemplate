@@ -15,8 +15,7 @@ $('document').ready(function() {
 var exp = {};
 var config_views = {};
 
-exp.init = function(){
-
+exp.init = function() {
 	// allocate storage room for global and trial data
     this.global_data = {};
     this.trial_data = [];

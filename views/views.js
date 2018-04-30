@@ -188,7 +188,6 @@ var mainSliderRating = {
         view.name = 'trial',
         view.template = $('#trial-view-slider-response').html();
         view.response = $('#response').html();
-        var sliderMoved = false;
         var response;
         $('#main').html(Mustache.render(view.template, {
             question: exp.trial_info.trials.sliderRating[CT].question,
@@ -203,31 +202,25 @@ var mainSliderRating = {
 
         // checks if the slider has been changed
         response.on('change', function() {
-            sliderMoved = true;
+            $('#next').removeClass('nodisplay');
         });
         response.on('click', function() {
-            sliderMoved = true;
+            $('#next').removeClass('nodisplay');
         });
 
         $('#next').on('click', function() {
-            console.log(sliderMoved);
-            // if the slider has been changed, records the value and shows next slide
-            if (sliderMoved === true) {
-                RT = Date.now() - startingTime; // measure RT before anything else
-                trial_data = {
-                    trial_type: "mainSliderRating",
-                    trial_number: CT+1,
-                    question: exp.trial_info.trials.sliderRating[CT].question,
-                    option1: exp.trial_info.trials.sliderRating[CT].option1,
-                    option2: exp.trial_info.trials.sliderRating[CT].option2,
-                    rating_slider: response.val(),
-                    RT: RT
-                };
-                exp.trial_data.push(trial_data);
-                exp.findNextView();
-            } else {
-                $('.help-text').removeClass('nodisplay');
-            }
+            RT = Date.now() - startingTime; // measure RT before anything else
+            trial_data = {
+                trial_type: "mainSliderRating",
+                trial_number: CT+1,
+                question: exp.trial_info.trials.sliderRating[CT].question,
+                option1: exp.trial_info.trials.sliderRating[CT].option1,
+                option2: exp.trial_info.trials.sliderRating[CT].option2,
+                rating_slider: response.val(),
+                RT: RT
+            };
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
         });
 
         return view;

@@ -238,12 +238,6 @@ button:focus {
 	direction: rtl;
 }
 
-.help-text {
-	font-style: italic;
-	text-align: center;
-	color: #555;
-}
-
 /* does not display the element */
 .nodisplay {
 	display: none;
