@@ -11,8 +11,11 @@ exp.customize = function() {
                   mainSliderRating,
                   instructionsDropdownChoice,
                   mainDropdownChoice,
+				  instructionsRatingScale,
+                  mainRatingScale,
                   instructionsImageSelection,
                   mainImageSelection,
+				  instructionsKeyPress,
                   mainKeyPress,
                   postTest,
                   thanks];

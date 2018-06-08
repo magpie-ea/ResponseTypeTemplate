@@ -222,6 +222,46 @@
 		</div>
 		</script>
 
+		<!-- Trial view (buttons response) -->
+		<script id="trial-view-rating-response" type="x-tmpl-mustache">
+		<div class="view">
+		<div class="progress-bar-container">
+			<p>progress</p>
+			<div class="progress-bar"><span id='filled'><span></div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="picture", align = "center">
+			<img src={{picture}} alt="a picture" height="100" width="100">
+		</div>
+
+		<p class="question">
+		{{# question }}
+		{{ question }}
+		{{/ question }}
+		</p>
+
+		<p class="answer-container buttons-container">
+			<strong>{{{ option1 }}}</strong>
+			<label for="1" class="rating-answer">1</label>
+			<input type="radio" name="answer" id="1" value="1" />
+			<label for="2" class="rating-answer">2</label>
+			<input type="radio" name="answer" id="2" value="2" />
+			<label for="3" class="rating-answer">3</label>
+			<input type="radio" name="answer" id="3" value="3" />
+			<label for="4" class="rating-answer">4</label>
+			<input type="radio" name="answer" id="4" value="4" />
+			<label for="5" class="rating-answer">5</label>
+			<input type="radio" name="answer" id="5" value="5" />
+			<label for="6" class="rating-answer">6</label>
+			<input type="radio" name="answer" id="6" value="6" />
+			<label for="7" class="rating-answer">7</label>
+			<input type="radio" name="answer" id="7" value="7" />
+			<strong>{{{ option2 }}}</strong>
+		</p>
+
+		</div>
+		</script>
+		
 		<!-- Trial view (select from image selection response) -->
 		<script id="trial-view-image-selection" type="x-tmpl-mustache">
 		<div class="view">

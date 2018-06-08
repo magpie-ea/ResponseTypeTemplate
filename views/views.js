@@ -301,13 +301,82 @@ var mainDropdownChoice = {
     trials: 2
 };
 
+var instructionsRatingScale = {
+     // instruction's title
+    "title": "Instructions",
+    // instruction's text
+    "text": "You completed yet another part. In the next part you will select a degree from a rating scale.",
+    // instuction's slide proceeding button text
+    "buttonText": "Start rating task",
+    render: function() {
+        var view = {};
+        view.name = 'instructions';
+        view.template = $("#instructions-view").html();
+        $('#main').html(Mustache.render(view.template, {
+            title: this.title,
+            text: this.text,
+            button: this.buttonText
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        }); 
+
+        return view;
+    },
+    trials: 1
+};
+
+var mainRatingScale = {
+    render : function(CT) {
+        var view = {};
+        // what part of the progress bar is filled
+        var filled = CT * (180 / exp.views[exp.currentViewCounter].trials);
+        view.name = 'trial',
+        view.template = $('#trial-view-rating-response').html();
+        view.response = $('#response').html();
+        $('#main').html(Mustache.render(view.template, {
+            question: exp.trial_info.trials.forcedChoice[CT].question,
+            option1: exp.trial_info.trials.forcedChoice[CT].option1,
+            option2: exp.trial_info.trials.forcedChoice[CT].option2,
+            picture: exp.trial_info.trials.forcedChoice[CT].picture
+        }));
+        startingTime = Date.now();
+        // updates the progress bar
+        $('#filled').css('width', filled);
+
+        // attaches an event listener to the yes / no radio inputs
+        // when an input is selected a response property with a value equal
+        // to the answer is added to the trial object
+        // as well as a readingTimes property with value 
+        $('input[name=answer]').on('change', function() {
+            RT = Date.now() - startingTime; // measure RT before anything else
+            trial_data = {
+                trial_type: "mainRatingScale",
+                trial_number: CT+1,
+                question: exp.trial_info.trials.forcedChoice[CT].question,
+                option1: exp.trial_info.trials.forcedChoice[CT].option1,
+                option2: exp.trial_info.trials.forcedChoice[CT].option2,
+                option_chosen: $('input[name=answer]:checked').val(),
+                RT: RT
+            };
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
+        });
+
+        return view;
+    },
+    trials: 2
+};
+
 var instructionsImageSelection = {
      // instruction's title
     "title": "Instructions",
     // instruction's text
     "text": "In the next part you will read a sentence and click on a picture",
     // instuction's slide proceeding button text
-    "buttonText": "Start picture task",
+    "buttonText": "Start picture selection task",
     render: function() {
         var view = {};
         view.name = 'instructions';
@@ -366,6 +435,33 @@ var mainImageSelection = {
         return view;
     },
     trials: 2
+};
+
+var instructionsKeyPress = {
+     // instruction's title
+    "title": "Instructions",
+    // instruction's text
+    "text": "In the next part you will select options with key presses.",
+    // instuction's slide proceeding button text
+    "buttonText": "Start key press task",
+    render: function() {
+        var view = {};
+        view.name = 'instructions';
+        view.template = $("#instructions-view").html();
+        $('#main').html(Mustache.render(view.template, {
+            title: this.title,
+            text: this.text,
+            button: this.buttonText
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        }); 
+
+        return view;
+    },
+    trials: 1
 };
 
 var mainKeyPress = {
@@ -428,16 +524,16 @@ var mainKeyPress = {
 
                 console.log(trial_data);
                 exp.trial_data.push(trial_data);
-                $('body').off('keyup', handleKeyPress);
+                $('body').off('keydown', handleKeyPress);
                 exp.findNextView();
             }   
         };
 
-        $('body').on('keyup', handleKeyPress);
+        $('body').on('keydown', handleKeyPress);
 
         return view;
     },
-    trials: 3
+    trials: 2
 };
 
 var postTest = {
