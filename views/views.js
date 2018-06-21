@@ -2,9 +2,9 @@ var intro = {
     // introduction title
     "title": "Welcome!",
     // introduction text
-    "text": "Thank you for participating in our study. In this study, you will ...",
+    "text": "This is a template to showcase different means of recording behavioral data.",
     // introduction's slide proceeding button text
-    "buttonText": "Begin experiment",
+    "buttonText": "Show me what you've got!",
     // render function renders the view
     render: function() {
         var view = {};
@@ -28,12 +28,9 @@ var intro = {
 }
 
 var instructionsForcedChoice = {
-     // instruction's title
-    "title": "Instructions",
-    // instruction's text
-    "text": "On each trial, you will see a question and two response options. Please select the response option you like most. We start with two practice trials.",
-    // instuction's slide proceeding button text
-    "buttonText": "Go to practice trial",
+    "title": "Binary choice task with buttons",
+    "text": "We start witha a forced-choice task with two options. Click on a labelled button to select an option.",
+	"buttonText": "Start binary choice task",
     render: function() {
         var view = {};
         view.name = 'instructions';
@@ -54,62 +51,7 @@ var instructionsForcedChoice = {
     trials: 1
 }
 
-var practiceForcedChoice = {
-    "title": "Practice trial",
-    render: function (CT) {
-        var view = {};
-        view.name = 'practice',
-        view.template = $('#practice-view').html();
-        $('#main').html(Mustache.render(view.template, {
-        title: this.title,
-        question: exp.trial_info.practice_trials[CT].question,
-        option1: exp.trial_info.practice_trials[CT].option1,
-        option2: exp.trial_info.practice_trials[CT].option2,
-        picture: exp.trial_info.practice_trials[CT].picture
-        }));
-        startingTime = Date.now();
-        // attaches an event listener to the yes / no radio inputs
-        // when an input is selected a response property with a value equal to the answer is added to the trial object
-        // as well as a readingTimes property with value - a list containing the reading times of each word
-        $('input[name=answer]').on('change', function() {
-            RT = Date.now() - startingTime; // measure RT before anything else
-            trial_data = {
-                trial_type: "practice",
-                trial_number: CT+1,
-                question: exp.trial_info.practice_trials[CT].question,
-                option1: exp.trial_info.practice_trials[CT].option1,
-                option2: exp.trial_info.practice_trials[CT].option2,
-                option_chosen: $('input[name=answer]:checked').val(),
-                RT: RT
-            };
-            exp.trial_data.push(trial_data)
-            exp.findNextView();
-        });
 
-        return view;
-    },
-    trials: 2
-}
-
-var beginForcedChoice = {
-    "text": "Now that you have acquainted yourself with the procedure of the task, the actual experiment will begin.",
-    render: function() {
-        var view = {};
-        view.name = 'beginExp';
-        view.template = $('#begin-exp-view').html();
-        $('#main').html(Mustache.render(view.template, {
-            text: this.text
-        }));
-
-        // moves to the next view
-        $('#next').on('click', function(e) {
-            exp.findNextView();
-        });
-
-        return view;
-    },
-    trials: 1
-}
 
 var mainForcedChoice = {
     render : function(CT) {
@@ -155,9 +97,9 @@ var mainForcedChoice = {
 
 var instructionsSliderRating = {
      // instruction's title
-    "title": "Instructions",
+    "title": "Slider rating task",
     // instruction's text
-    "text": "You completed the first part. In the next part you will adjust sliders. Training is not necessary. We know you can do it, so we start right away.",
+    "text": "In the next part you will adjust sliders. You have to click or drag the slider button. Only if you do will a button appear that you need to click to proceed.",
     // instuction's slide proceeding button text
     "buttonText": "Start slider task",
     render: function() {
@@ -230,9 +172,9 @@ var mainSliderRating = {
 
 var instructionsDropdownChoice = {
      // instruction's title
-    "title": "Instructions",
+    "title": "Drop-down menu selection",
     // instruction's text
-    "text": "You completed yet another part. In the next part you will choose a word from a dropdown menu.",
+    "text": "Select an option from a drop-down menu. Only after your selection will a button appear that allows you to proceed.",
     // instuction's slide proceeding button text
     "buttonText": "Start dropdown task",
     render: function() {
@@ -301,13 +243,80 @@ var mainDropdownChoice = {
     trials: 2
 };
 
+var instructionsRatingScale = {
+     // instruction's title
+    "title": "Rating scale task",
+    // instruction's text
+    "text": "Next you will select a degree from a rating scale. Just click on your prefered number from 1 to 7.",
+    // instuction's slide proceeding button text
+    "buttonText": "Start rating task",
+    render: function() {
+        var view = {};
+        view.name = 'instructions';
+        view.template = $("#instructions-view").html();
+        $('#main').html(Mustache.render(view.template, {
+            title: this.title,
+            text: this.text,
+            button: this.buttonText
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        }); 
+
+        return view;
+    },
+    trials: 1
+};
+
+var mainRatingScale = {
+    render : function(CT) {
+        var view = {};
+        // what part of the progress bar is filled
+        var filled = CT * (180 / exp.views[exp.currentViewCounter].trials);
+        view.name = 'trial',
+        view.template = $('#trial-view-rating-response').html();
+        view.response = $('#response').html();
+        $('#main').html(Mustache.render(view.template, {
+            question: exp.trial_info.trials.forcedChoice[CT].question,
+            option1: exp.trial_info.trials.forcedChoice[CT].option1,
+            option2: exp.trial_info.trials.forcedChoice[CT].option2,
+            picture: exp.trial_info.trials.forcedChoice[CT].picture
+        }));
+        startingTime = Date.now();
+        // updates the progress bar
+        $('#filled').css('width', filled);
+
+        // attaches an event listener to the yes / no radio inputs
+        // when an input is selected a response property with a value equal
+        // to the answer is added to the trial object
+        // as well as a readingTimes property with value 
+        $('input[name=answer]').on('change', function() {
+            RT = Date.now() - startingTime; // measure RT before anything else
+            trial_data = {
+                trial_type: "mainRatingScale",
+                trial_number: CT+1,
+                question: exp.trial_info.trials.forcedChoice[CT].question,
+                option1: exp.trial_info.trials.forcedChoice[CT].option1,
+                option2: exp.trial_info.trials.forcedChoice[CT].option2,
+                option_chosen: $('input[name=answer]:checked').val(),
+                RT: RT
+            };
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
+        });
+
+        return view;
+    },
+    trials: 2
+};
+
 var instructionsImageSelection = {
      // instruction's title
-    "title": "Instructions",
-    // instruction's text
-    "text": "In the next part you will read a sentence and click on a picture",
-    // instuction's slide proceeding button text
-    "buttonText": "Start picture task",
+    "title": "Image selection task",
+    "text": "Just click on a picture.",
+    "buttonText": "Start image selection task",
     render: function() {
         var view = {};
         view.name = 'instructions';
@@ -368,6 +377,30 @@ var mainImageSelection = {
     trials: 2
 };
 
+var instructionsKeyPress = {
+    "title": "Binary choice with keys",
+    "text": "Make a binary choice by pressing keys 'f' or 'j'. Good method for reaction time measurements.",
+    "buttonText": "Start key press task",
+    render: function() {
+        var view = {};
+        view.name = 'instructions';
+        view.template = $("#instructions-view").html();
+        $('#main').html(Mustache.render(view.template, {
+            title: this.title,
+            text: this.text,
+            button: this.buttonText
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        }); 
+
+        return view;
+    },
+    trials: 1
+};
+
 var mainKeyPress = {
     render : function(CT) {
         var view = {};
@@ -414,8 +447,8 @@ var mainKeyPress = {
                     RT: RT
                 };
 
-                trial_data[key1] = exp.trial_info.trials.keyPress[CT][key1];
-                trial_data[key2] = exp.trial_info.trials.keyPress[CT][key2];
+                trial_data['key1'] = exp.trial_info.trials.keyPress[CT][key1];
+                trial_data['key2'] = exp.trial_info.trials.keyPress[CT][key2];
 
                 // question or/and picture are optional
                 if (exp.trial_info.trials.keyPress[CT].picture !== undefined) {
@@ -428,16 +461,16 @@ var mainKeyPress = {
 
                 console.log(trial_data);
                 exp.trial_data.push(trial_data);
-                $('body').off('keyup', handleKeyPress);
+                $('body').off('keydown', handleKeyPress);
                 exp.findNextView();
             }   
         };
 
-        $('body').on('keyup', handleKeyPress);
+        $('body').on('keydown', handleKeyPress);
 
         return view;
     },
-    trials: 3
+    trials: 2
 };
 
 var postTest = {

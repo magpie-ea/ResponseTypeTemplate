@@ -22,6 +22,7 @@ bunch of response measures as examples for future reuse. It includes:
 + forced-choice task
 + slider rating task
 + dropdown menu choice
++ Likert-scale rating task
 + click-on-a-picture task
 + press a button task
 
