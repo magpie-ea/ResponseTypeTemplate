@@ -279,10 +279,10 @@ var mainRatingScale = {
         view.template = $('#trial-view-rating-response').html();
         view.response = $('#response').html();
         $('#main').html(Mustache.render(view.template, {
-            question: exp.trial_info.trials.forcedChoice[CT].question,
-            option1: exp.trial_info.trials.forcedChoice[CT].option1,
-            option2: exp.trial_info.trials.forcedChoice[CT].option2,
-            picture: exp.trial_info.trials.forcedChoice[CT].picture
+            question: exp.trial_info.trials.ratingScale[CT].question,
+            option1: exp.trial_info.trials.ratingScale[CT].option1,
+            option2: exp.trial_info.trials.ratingScale[CT].option2,
+            picture: exp.trial_info.trials.ratingScale[CT].picture
         }));
         startingTime = Date.now();
         // updates the progress bar
@@ -297,9 +297,74 @@ var mainRatingScale = {
             trial_data = {
                 trial_type: "mainRatingScale",
                 trial_number: CT+1,
-                question: exp.trial_info.trials.forcedChoice[CT].question,
-                option1: exp.trial_info.trials.forcedChoice[CT].option1,
-                option2: exp.trial_info.trials.forcedChoice[CT].option2,
+                question: exp.trial_info.trials.ratingScale[CT].question,
+                option1: exp.trial_info.trials.ratingScale[CT].option1,
+                option2: exp.trial_info.trials.ratingScale[CT].option2,
+                option_chosen: $('input[name=answer]:checked').val(),
+                RT: RT
+            };
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
+        });
+
+        return view;
+    },
+    trials: 2
+};
+
+var instructionsSentenceChoice = {
+     // instruction's title
+    "title": "Sentence selection task",
+    // instruction's text
+    "text": "Next you will select a sentence from a set of given sentences.",
+    // instuction's slide proceeding button text
+    "buttonText": "Start sentence selection task",
+    render: function() {
+        var view = {};
+        view.name = 'instructions';
+        view.template = $("#instructions-view").html();
+        $('#main').html(Mustache.render(view.template, {
+            title: this.title,
+            text: this.text,
+            button: this.buttonText
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        }); 
+
+        return view;
+    },
+    trials: 1
+};
+
+var mainSentenceChoice = {
+    render : function(CT) {
+        var view = {};
+        // what part of the progress bar is filled
+        var filled = CT * (180 / exp.views[exp.currentViewCounter].trials);
+        view.name = 'trial',
+        view.template = $('#trial-view-sentence-choice').html();
+        view.response = $('#response').html();
+        $('#main').html(Mustache.render(view.template, {
+            question: exp.trial_info.trials.sentenceChoice[CT].question,
+            option1: exp.trial_info.trials.sentenceChoice[CT].option1,
+            option2: exp.trial_info.trials.sentenceChoice[CT].option2,
+            picture: exp.trial_info.trials.sentenceChoice[CT].picture
+        }));
+        startingTime = Date.now();
+        // updates the progress bar
+        $('#filled').css('width', filled);
+
+        $('input[name=answer]').on('change', function() {
+            RT = Date.now() - startingTime; // measure RT before anything else
+            trial_data = {
+                trial_type: "mainTextChoice",
+                trial_number: CT+1,
+                question: exp.trial_info.trials.sentenceChoice[CT].question,
+                option1: exp.trial_info.trials.sentenceChoice[CT].option1,
+                option2: exp.trial_info.trials.sentenceChoice[CT].option2,
                 option_chosen: $('input[name=answer]:checked').val(),
                 RT: RT
             };

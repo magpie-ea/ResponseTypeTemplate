@@ -25,6 +25,14 @@ var trials_raw = {
         {question: "Today I feel", option1: "fine", option2: "great", picture: "images/question_mark_01.png"},
         {questionLeftPart: "The weather is", questionRightPart: "today", option1: "shiny", option2: "rainbow", picture: "images/question_mark_02.png"}
     ],
+    sentenceChoice: [
+        {question: "fine", option1: "How are you today?", option2: "What is the weather like?"},
+        {question: "ham", option1: "What's on the bread?", option2: "Where is my head?", picture: "images/question_mark_02.png"}
+    ],
+    ratingScale: [
+        {question: "Today I feel", option1: "fine", option2: "great", picture: "images/question_mark_01.png"},
+        {question: "What is the weather like?", option1: "shiny", option2: "rainbow", picture: "images/question_mark_02.png"}
+    ],
     // image selection
     imageSelection: [
         {question: "How are you today?", option1: "fine", picture1: "images/question_mark_02.png", option2: "great", picture2: "images/question_mark_01.png"},
