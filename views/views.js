@@ -29,7 +29,7 @@ var intro = {
 
 var instructionsForcedChoice = {
     "title": "Binary choice task with buttons",
-    "text": "We start witha a forced-choice task with two options. Click on a labelled button to select an option.",
+    "text": "We start with a forced-choice task with two options. Click on a labelled button to select an option.",
 	"buttonText": "Start binary choice task",
     render: function() {
         var view = {};
@@ -50,8 +50,6 @@ var instructionsForcedChoice = {
     },
     trials: 1
 }
-
-
 
 var mainForcedChoice = {
     render : function(CT) {
@@ -120,6 +118,78 @@ var instructionsSliderRating = {
         return view;
     },
     trials: 1
+};
+
+var instructionsTextboxInput = {
+    "title": "Textbox Input Task",
+    "text": "In this part, you will write a text in a textbox field. In order to proceed to the next slide, please provide at least 10 characters of text.",
+    "buttonText": "Start textbox input task",
+    render: function() {
+        var view = {};
+        view.name = 'instructions';
+        view.template = $("#instructions-view").html();
+        $('#main').html(Mustache.render(view.template, {
+            title: this.title,
+            text: this.text,
+            button: this.buttonText
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        }); 
+
+        return view;
+    },
+    trials: 1
+};
+
+var mainTextboxInput = {
+    render : function(CT) {
+        var view = {};
+        // what part of the progress bar is filled
+        var filled = CT * (180 / exp.views[exp.currentViewCounter].trials);
+        view.name = 'trial',
+        view.template = $('#trial-view-textbox-input').html();
+        view.response = $('#response').html();
+        $('#main').html(Mustache.render(view.template, {
+            question: exp.trial_info.trials.textboxInput[CT].question,
+            picture: exp.trial_info.trials.textboxInput[CT].picture
+        }));
+        var next = $('#next');
+        var textInput = $('textarea');
+        startingTime = Date.now();
+        // updates the progress bar
+        $('#filled').css('width', filled);
+
+        // attaches an event listener to the textbox input
+        textInput.on('keyup', function() {
+            // if the text is longer than (in this case) 10 characters without the spaces
+            // the 'next' button appears
+            if (textInput.val().trim().length > 10) {
+                next.removeClass('nodisplay');
+            } else {
+                next.addClass('nodisplay');
+            }
+        });
+
+        // the trial data gets added to the trial object
+        next.on('click', function() {
+            RT = Date.now() - startingTime; // measure RT before anything else
+            trial_data = {
+                trial_type: "mainTextboxInput",
+                trial_number: CT+1,
+                question: exp.trial_info.trials.textboxInput[CT].question,
+                text_input: textInput.val().trim(),
+                RT: RT
+            };
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
+        });
+
+        return view;
+    },
+    trials: 2
 };
 
 var mainSliderRating = {

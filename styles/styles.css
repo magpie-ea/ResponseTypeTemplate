@@ -275,6 +275,18 @@ button:focus {
 	direction: rtl;
 }
 
+/* textbox input */
+.textbox-input {
+	border: none;
+	border: 2px solid #5187BA;
+	border-radius: 10px;
+	display: block;
+	font-size: 16px;
+	margin: 0 auto;
+	outline: none;
+	padding: 10px 20px;
+}
+
 /* does not display the element */
 .nodisplay {
 	display: none;

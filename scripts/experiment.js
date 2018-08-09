@@ -5,6 +5,8 @@ exp.customize = function() {
     this.views = [intro,
                   instructionsForcedChoice,
                   mainForcedChoice,
+                  instructionsTextboxInput,
+                  mainTextboxInput,
                   instructionsSliderRating,
                   mainSliderRating,
                   instructionsDropdownChoice,

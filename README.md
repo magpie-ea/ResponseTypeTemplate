@@ -20,6 +20,7 @@ Template](https://github.com/babe-project/MinimalTemplate). This experiment adds
 bunch of response measures as examples for future reuse. It includes:
 
 + forced-choice task
++ textbox input task
 + slider rating task
 + dropdown menu choice
 + Likert-scale rating task
