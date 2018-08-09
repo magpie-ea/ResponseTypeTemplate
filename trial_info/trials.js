@@ -18,7 +18,7 @@ var trials_raw = {
     // textbox input
     textboxInput: [
         {question: "How are you today?", picture: "images/question_mark_01.png"},
-        {question: "What is the weather like?", picture: "images/question_mark_02.png"}
+        {question: "What is the weather like?"}
     ],
     // slider raiting
     sliderRating: [
