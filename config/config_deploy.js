@@ -6,8 +6,8 @@ var config_deploy = {
     "experiment_id": "MinimalTemplateDEBUG", // needed to recover data from server app
     "description": "A minimal template for a browser-based experiment which can be deployed in several ways",
     "deployMethod" : "debug", // set deployment method; use one of:
-	                          //'debug', 'localServer', 'MTurk', 
-	                          // 'MTurkSandbox', 'Prolific', 'directLink'
+                              //'debug', 'localServer', 'MTurk', 
+                              // 'MTurkSandbox', 'Prolific', 'directLink'
     
     // optional fields
     "contact_email": "YOUREMAIL@wherelifeisgreat.you", // who to contact in case of trouble
@@ -30,7 +30,3 @@ console.log("deployMethod: " + config_deploy.deployMethod);
 console.log("live experiment: " + config_deploy.liveExperiment);
 console.log("runs on MTurk: " + config_deploy.is_MTurk);
 console.log("MTurk server: " + config_deploy.MTurk_server);
-
-
-
-   

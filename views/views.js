@@ -30,7 +30,7 @@ var intro = {
 var instructionsForcedChoice = {
     "title": "Binary choice task with buttons",
     "text": "We start with a forced-choice task with two options. Click on a labelled button to select an option.",
-	"buttonText": "Start binary choice task",
+    "buttonText": "Start binary choice task",
     render: function() {
         var view = {};
         view.name = 'instructions';
@@ -669,7 +669,7 @@ var thanks = {
 //        data = _.merge(exp.global_data, data)
 
         // what is seen on the screen depends on the used deploy method
-		//    normally, you do not need to modify this
+        //    normally, you do not need to modify this
         if ((config_deploy.is_MTurk) || (config_deploy.deployMethod === 'directLink')) {
             // updates the fields in the hidden form with info for the MTurk's server
             $('#main').html(Mustache.render(view.template, {

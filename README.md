@@ -28,4 +28,3 @@ bunch of response measures as examples for future reuse. It includes:
 + press a button task
 
 To learn more about this, check the documentation for [_babe](https://babe-project.github.io/babe_site/).
-

@@ -17,7 +17,7 @@ exp.customize = function() {
                   mainSentenceChoice,
                   instructionsImageSelection,
                   mainImageSelection,
-				          instructionsKeyPress,
+                  instructionsKeyPress,
                   mainKeyPress,
                   postTest,
                   thanks];
@@ -27,7 +27,7 @@ exp.customize = function() {
 
     // This method uses external files instead.
     // this.trial_info = prepareDataFromCSV("trial_info/practiceTrials.csv", "trial_info/trials.csv");
-	
+    
 };
 
 // create and return an object ('data') where the experiment's info is stored
@@ -36,8 +36,8 @@ var prepareData = function() {
     var trials = {};
     var shuffled;
 
-	console.log(trials_raw)
-	
+    console.log(trials_raw)
+    
     for (prop in trials_raw) {
         if (trials_raw.hasOwnProperty(prop)) {
             shuffled = _.shuffle(trials_raw[prop]);
