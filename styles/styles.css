@@ -18,6 +18,10 @@ main {
     padding: 50px 0;
 }
 
+.thanks-templ {
+    max-width: auto;
+}
+
 /* titles */
 h1 {
     color: rgba(0, 0, 0, 0.87);
@@ -75,7 +79,7 @@ button:focus {
 
 .progress-bar-container {
     float: right;
-    margin: 0 10px 30px 10px;
+    margin: 0 10px 60px 10px;
 }
 
 .progress-bar-container p {
@@ -89,14 +93,17 @@ button:focus {
 
 .progress-bar {
     border: 1px solid #5187BA;
-    height: 12px;
-    width: 180px;
+    border-radius: 3px;
+    display: inline-block;
+    height: 14px;
+    margin: 5px;
+    width: 60px;
 }
 
 .progress-bar #filled {
     background-color: #5187BA;
     display: block;
-    height: 12px;
+    height: 14px;
 }
 
 .stimulus-container {
@@ -287,9 +294,19 @@ button:focus {
     padding: 10px 20px;
 }
 
+.help-text {
+    font-style: italic;
+    text-align: center;
+    color: #555;
+}
+
 /* does not display the element */
 .nodisplay {
     display: none;
+}
+
+#prolific-id-form {
+    margin-top: 20px;
 }
 
 .post-test-templ form {
@@ -339,6 +356,7 @@ button:focus {
 
 .thanks-templ h4 {
     margin: 40px 10px;
+    text-align: center;
 }
 
 .thanks-templ strong {
@@ -355,9 +373,10 @@ button:focus {
 .thanks-templ .prolific-url {
     color: white;
     display: inline-block;
-    background: #25BC82;
+    background: #E74D10;
+    border-radous: 3px;
     padding: 10px;
-    margin: 10px 5px;
+    margin: 8px 4px;
     text-decoration: none;
 }
 
@@ -392,4 +411,64 @@ button:focus {
     color: white;
     padding: 15px 8px;
     text-align: left;
+}
+
+/* submission loader */
+/* https://projects.lukehaas.me/css-loaders/ */
+.loader,
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: load7 1.3s infinite ease-in-out;
+    animation: load7 1.3s infinite ease-in-out;
+}
+.loader {
+    color: #5187BA;
+    font-size: 10px;
+    margin: 40px auto;
+    position: relative;
+    text-indent: -9999em;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+    content: '';
+    position: absolute;
+    top: 0;
+}
+.loader:before {
+    left: -3.5em;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+.loader:after {
+    left: 3.5em;
+}
+@-webkit-keyframes load7 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 2.5em 0 -1.3em;
+    }
+    40% {
+        box-shadow: 0 2.5em 0 0;
+    }
+}
+@keyframes load7 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 2.5em 0 -1.3em;
+    }
+    40% {
+        box-shadow: 0 2.5em 0 0;
+    }
 }

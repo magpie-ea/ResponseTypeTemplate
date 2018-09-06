@@ -10,51 +10,86 @@ $('document').ready(function() {
     };
 });
 
-// empty shells for 'exp' and 'config_views' objects;
-// to be filled with life later
+// empty shells for 'exp' and 'config_views' objects; to be filled with life later
 var exp = {};
-var config_views = {};
 
 exp.init = function() {
+    
     // allocate storage room for global and trial data
     this.global_data = {};
     this.trial_data = [];
+    this.trial_info= {};
 
     // record current date and time
     this.global_data.startDate = Date();
     this.global_data.startTime = Date.now();
 
     // call user-defined costumization function
-    exp.customize()
+    this.customize();
+
+    // flatten views_seq after possible 'loop' insertions
+    this.views_seq = _.flatten(this.views_seq);
+    // create Progress Bar/s
+    this.progress = this.initProgressBar();
+    this.progress.add();
+
+    // insert a Current Trial counter for each view
+    _.map(this.views_seq, function(i) {i.CT = 0});
 
     // initialize procedure
     this.currentViewCounter = 0;
     this.currentTrialCounter = 0;
+    this.currentTrialInViewCounter = 0;
     this.currentView = this.findNextView();
-}
-
+    
+    // user does not (should not) change the following information
+    // checks the config _deploy.deployMethod is MTurk or MTurkSandbox,
+    // sets the submission url to MTukr's servers
+    config_deploy.MTurk_server = config_deploy.deployMethod == "MTurkSandbox" ?
+    "https://workersandbox.mturk.com/mturk/externalSubmit" : // URL for MTurk sandbox
+    config_deploy.deployMethod == 'MTurk' ?
+    "https://www.mturk.com/mturk/externalSubmit" : // URL for live HITs on MTurk
+    ""; // blank if deployment is not via MTurk
+    // if the config_deploy.deployMethod is not debug, then liveExperiment is true
+    config_deploy.liveExperiment = config_deploy.deployMethod !== "debug";
+    config_deploy.is_MTurk = config_deploy.MTurk_server !== "";
+    config_deploy.submissionURL = config_deploy.deployMethod == "localServer"? "http://localhost:4000/api/submit_experiment/" + config_deploy.experimentID : "https://babe-backend.herokuapp.com/api/submit_experiment/" + config_deploy.experimentID;
+    console.log("deployMethod: " + config_deploy.deployMethod);
+    console.log("live experiment: " + config_deploy.liveExperiment);
+    console.log("runs on MTurk: " + config_deploy.is_MTurk);
+    console.log("MTurk server: " + config_deploy.MTurk_server);
+};
 
 
 // navigation through the views and steps in each view;
 // shows each view (in the order defined in 'config_general') for
 // the given number of steps (as defined in 'config_general')
 exp.findNextView = function() {
-    var currentView = this.views[this.currentViewCounter];
-    if (this.currentTrialCounter < currentView.trials) {
-        this.currentView = currentView.render(this.currentTrialCounter);
-        this.currentTrialCounter ++;
+    var currentView = this.views_seq[this.currentViewCounter];
+    if (this.currentTrialInViewCounter < currentView.trials) {
+        currentView.render(currentView.CT, this.currentTrialInViewCounter);
     } else {
-        this.currentViewCounter ++;
-        var currentView = this.views[this.currentViewCounter];
-        this.currentTrialCounter = 0;
-        this.currentView = currentView.render(this.currentTrialCounter);
-        this.currentTrialCounter ++;
+        this.currentViewCounter++;
+        currentView = this.views_seq[this.currentViewCounter];
+        this.currentTrialInViewCounter = 0;
+        currentView.render(currentView.CT);
     }
+    // increment counter for how many trials we have seen of THIS view during THIS occurrence of it
+    this.currentTrialInViewCounter++;
+    // increment counter for how many trials we have seen in the whole experiment
+    this.currentTrialCounter++;
+    // increment counter for how many trials we have seen of THIS view during the whole experiment
+    currentView.CT++;
+    console.log(currentView);
+    if (currentView.hasProgressBar) {
+        this.progress.update();
+    }
+
+    return currentView;
 };
 
 // submits the data
 exp.submit = function() {
-
     // adds columns with NA values
     var addEmptyColumns = function(trialData) {
         var columns = [];

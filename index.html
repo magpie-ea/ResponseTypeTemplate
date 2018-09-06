@@ -25,11 +25,11 @@
         <script src="scripts/main.js"></script>
         <script src="scripts/experiment.js"></script>
         <script src="scripts/helpers.js"></script>
+        <script src="scripts/utils.js"></script>
         <script src="scripts/submit_to_server.js"></script>
         
         <!-- local trial_info files -->
-        <script src="trial_info/trials.js"></script>
-        <script src="trial_info/practiceTrials.js"></script>
+        <script src="trial_info/main_trials.js"></script>
 
         <!-- views -->
         <script src="views/views.js"></script>
@@ -52,21 +52,25 @@
         <!-- Introduction view -->
         <script id="intro-view" type="x-tmpl-mustache">
         <div class='view'>
-            {{# title }}
-            <h1 class="title">{{ title }}</h1>
-            {{/ title }}
-            {{# text }}
-            <section class="text-container">
-                <p class="text">{{ text }}</p>
+        {{# title }}
+        <h1 class="title">{{ title }}</h1>
+        {{/ title }}
+        {{# text }}
+        <section class="text-container">
+        <p class="text">{{ text }}</p>
             </section>
             {{/ text }}
+            <p id="prolific-id-form">
+            <label for="prolific-id">Please, enter your Prolific ID</label>
+            <input type="text" id="prolific-id" />
+            </p>
             {{# button }}
-            <button id="next">{{ button }}</button>
+            <button id="next" class="nodisplay">{{ button }}</button>
             {{/ button }}
             {{^ button }}
-            <button id="next">Begin Experiment</button>
+            <button id="next" class="nodisplay">Begin Experiment</button>
             {{/ button }}
-        </div>
+            </div>
         </script>
 
         <!-- Instructions view -->
@@ -126,11 +130,6 @@
         <!-- Trial view (buttons response) -->
         <script id="trial-view-buttons-response" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
         <div class="picture", align = "center">
             <img src={{picture}} alt="a picture" height="100" width="100">
         </div>
@@ -154,11 +153,6 @@
         <!-- Trial view (slider response) -->
         <script id="trial-view-slider-response" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
         <div class="picture", align = "center">
             <img src={{ picture }} alt="a picture" height="100" width="100">
         </div>
@@ -181,11 +175,6 @@
         <!-- Trial view (select from dropdown response) -->
         <script id="trial-view-dropdown-response" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
         <div class="picture", align = "center">
             <img src={{ picture }} alt="a picture" height="100" width="100">
         </div>
@@ -225,12 +214,6 @@
         <!-- Trial view (buttons response) -->
         <script id="trial-view-rating-response" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
-
         {{# picture }}
         <div class="picture", align = "center">
             <img src={{ picture }} alt="picture" height="100" width="100">
@@ -267,12 +250,6 @@
 
         <script id="trial-view-sentence-choice" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
-
         {{# picture }}
         <div class="picture" align = "center">
             <img src={{ picture }} alt="picture" height="100" width="100">
@@ -297,12 +274,6 @@
         <!-- Trial view (select from image selection response) -->
         <script id="trial-view-image-selection" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
-
         <p class="question">
         {{# question }}
         {{ question }}
@@ -322,12 +293,6 @@
         <!-- Trial view (select from image selection response) -->
         <script id="trial-view-key-press" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
-
         <h3>{{ key1 }} = {{ value1 }}, {{ key2 }} = {{ value2 }}</h3>
 
         <p class="question">
@@ -354,12 +319,6 @@
          pixels. This will overwrite the rows and cols in this file. -->
         <script id="trial-view-textbox-input" type="x-tmpl-mustache">
         <div class="view">
-        <div class="progress-bar-container">
-            <p>progress</p>
-            <div class="progress-bar"><span id='filled'><span></div>
-        </div>
-        <div class="clearfix"></div>
-
         <p class="question">
         {{# question }}
         {{/ question }}
@@ -437,16 +396,17 @@
     <!-- Thanks View -->
     <script id="thanks-view" type="x-tmpl-mustache">
         <div class="view thanks-templ">
-            <h4 class="warning-message">Please do not close this tab until you see a <strong>&#10004; Submission Successful</strong> message on the screen.</h4>
+            <h4 class="warning-message">submitting the data
+                <div class="loader"></div>
+            </h4>
             {{# thanksMessage }}
             <h1 class="thanks-message nodisplay">{{ thanksMessage }}</h1>
             {{/ thanksMessage }}
             {{^ thanksMessage }}
             <h1 class="thanks-message nodisplay">Thank you for taking part in this experiment!</h1>
             {{/ thanksMessage }}
-            <h4 class="success-message nodisplay"><strong>&#10004; Submission Successful!</strong></h4>
             {{# extraMessage }}
-            <h4 class="extra-message nodisplay">{{{ extraMessage }}}</h4>
+            <h2 class="extra-message nodisplay">{{{ extraMessage }}}</h2>
             {{/ extraMessage }}
         </div>
     </script>
