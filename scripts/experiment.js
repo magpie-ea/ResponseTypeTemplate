@@ -2,57 +2,43 @@
 exp.customize = function() {
 
     // specify view order
-    this.views = [intro,
-                  instructionsForcedChoice,
-                  mainForcedChoice,
-                  instructionsTextboxInput,
-                  mainTextboxInput,
-                  instructionsSliderRating,
-                  mainSliderRating,
-                  instructionsDropdownChoice,
-                  mainDropdownChoice,
-                  instructionsRatingScale,
-                  mainRatingScale,
-                  instructionsSentenceChoice,
-                  mainSentenceChoice,
-                  instructionsImageSelection,
-                  mainImageSelection,
-				  instructionsKeyPress,
-                  mainKeyPress,
-                  postTest,
-                  thanks];
+    this.views_seq = [intro,
+                      instructionsForcedChoice,
+                      mainForcedChoice,
+                      instructionsTextboxInput,
+                      mainTextboxInput,
+                      instructionsSliderRating,
+                      mainSliderRating,
+                      instructionsDropdownChoice,
+                      mainDropdownChoice,
+                      instructionsRatingScale,
+                      mainRatingScale,
+                      instructionsSentenceChoice,
+                      mainSentenceChoice,
+                      instructionsImageSelection,
+                      mainImageSelection,
+                      instructionsKeyPress,
+                      mainKeyPress,
+                      postTest,
+                      thanks];
+
 
     // prepare information about trials (procedure)
-    this.trial_info = prepareData();
-
-    // This method uses external files instead.
-    // this.trial_info = prepareDataFromCSV("trial_info/practiceTrials.csv", "trial_info/trials.csv");
-	
-};
-
-// create and return an object ('data') where the experiment's info is stored
-// include a placeholder exp.out in which to store participants' responses
-var prepareData = function() {
-    var trials = {};
-    var shuffled;
-
-	console.log(trials_raw)
-	
-    for (prop in trials_raw) {
-        if (trials_raw.hasOwnProperty(prop)) {
-            shuffled = _.shuffle(trials_raw[prop]);
-            trials[prop] = shuffled;
-        }
-    }
-
-    // variables `trials_raw` and `practice_trials` are defined in separate files
-    // in folder `trial_info`
-    var data = {
-        // 'trials': _.shuffle(trials_raw),  // items in data.trials are shuffled randomly upon initialization
-        'trials': trials,
-        'practice_trials': practice_trials, // practice trials occur in the same order for all participants
-        'out': [] // mandatory field to store results in during experimental trials
-    };
-
-    return data;
+    // randomize main trial order, but keep practice trial order fixed
+    this.trial_info.main_trials = main_trials;
+    
+    // adds progress bars to the views listed
+    // view's name is the same as object's name
+    this.progress_bar_in = ['mainForcedChoice',
+                            'mainTextboxInput',
+                            'mainSliderRating',
+                            'mainDropdownChoice',
+                            'mainRaitingScale',
+                            'mainSentenceChoice',
+                            'mainImageSelection',
+                            'mainKeyPress'];
+    // styles: chunks, separate or default
+    this.progress_bar_style = 'default';
+    // the width of the progress bar or a single chunk
+    this.progress_bar_width = 100;
 };
