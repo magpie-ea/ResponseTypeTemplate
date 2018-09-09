@@ -17,7 +17,7 @@ exp.customize = function() {
                   mainSentenceChoice,
                   instructionsImageSelection,
                   mainImageSelection,
-				          instructionsKeyPress,
+				  instructionsKeyPress,
                   mainKeyPress,
                   postTest,
                   thanks];
