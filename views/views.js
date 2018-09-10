@@ -1,7 +1,7 @@
 var intro = {
     name: 'intro',
     title: "Welcome!",
-    text: "Thank you for participating in our study. In this study, you will judge whether each of 10 short sentences is true or false.",
+    text: "This is a template to showcase different means of recording behavioral data.",
     buttonText: "Begin experiment",
     render: function() {
         viewTemplate = $('#intro-view').html();
