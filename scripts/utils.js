@@ -52,7 +52,6 @@ exp.initProgressBar = function() {
     // adds progress bar(s) to the specified experiment.js, this.progress_bar_in
     progressBar.add = function() {
         for (var i=0; i<exp.views_seq.length; i++) {
-                    console.log(exp.views_seq[i]);
             for (var j=0; j<exp.progress_bar_in.length; j++) {
                 if (exp.views_seq[i].name === exp.progress_bar_in[j]) {
                     totalProgressChunks++;

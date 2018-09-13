@@ -80,7 +80,6 @@ exp.findNextView = function() {
     this.currentTrialCounter++;
     // increment counter for how many trials we have seen of THIS view during the whole experiment
     currentView.CT++;
-    console.log(currentView);
     if (currentView.hasProgressBar) {
         this.progress.update();
     }
@@ -241,7 +240,6 @@ exp.submit = function() {
         submitResults(config_deploy.contact_email, config_deploy.submissionURL, flattenData(data));
     } else {
         // hides the 'Please do not close the tab.. ' message in debug mode
-        console.log(data);
         $('.warning-message').addClass('nodisplay');
         jQuery('<h3/>', {
             text: 'Debug Mode'

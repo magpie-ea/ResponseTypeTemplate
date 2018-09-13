@@ -527,7 +527,6 @@ var mainKeyPress = {
     render : function(CT) {
         var view = {};
         view.template = $('#trial-view-key-press').html();
-        console.log(exp.trial_info.main_trials.keyPress[CT]);
         var key1 = exp.trial_info.main_trials.keyPress[CT].key1;
         var key2 = exp.trial_info.main_trials.keyPress[CT].key2;
         $('#main').html(Mustache.render(view.template, {
@@ -546,7 +545,6 @@ var mainKeyPress = {
 
             if (keyPressed === key1 || keyPressed === key2) {
                 var corectness;
-                console.log(keyPressed);
                 var RT = Date.now() - startingTime; // measure RT before anything else
 
                 if (exp.trial_info.main_trials.keyPress[CT].expected === exp.trial_info.main_trials.keyPress[CT][keyPressed.toLowerCase()]) {
@@ -577,7 +575,6 @@ var mainKeyPress = {
                     trial_data['question'] = exp.trial_info.main_trials.keyPress[CT].question;
                 } 
 
-                console.log(trial_data);
                 exp.trial_data.push(trial_data);
                 $('body').off('keydown', handleKeyPress);
                 exp.findNextView();
