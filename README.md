@@ -19,11 +19,12 @@ This is an example of a browser-based psychological experiment using
 Template](https://github.com/babe-project/MinimalTemplate). This experiment adds a
 bunch of response measures as examples for future reuse. It includes:
 
-+ forced-choice task
++ binary forced-choice task
 + textbox input task
 + slider rating task
-+ dropdown menu choice
++ dropdown menu task
 + Likert-scale rating task
++ text selection task
 + click-on-a-picture task
 + press a button task
 
