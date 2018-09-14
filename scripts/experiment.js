@@ -2,25 +2,27 @@
 exp.customize = function() {
 
     // specify view order
-    this.views_seq = [intro,
-                      instructionsForcedChoice,
-                      mainForcedChoice,
-                      instructionsTextboxInput,
-                      mainTextboxInput,
-                      instructionsSliderRating,
-                      mainSliderRating,
-                      instructionsDropdownChoice,
-                      mainDropdownChoice,
-                      instructionsRatingScale,
-                      mainRatingScale,
-                      instructionsSentenceChoice,
-                      mainSentenceChoice,
-                      instructionsImageSelection,
-                      mainImageSelection,
-                      instructionsKeyPress,
-                      mainKeyPress,
-                      postTest,
-                      thanks];
+    this.views_seq = [
+        intro,
+        instructionsForcedChoice,
+        mainForcedChoice,
+        instructionsTextboxInput,
+        mainTextboxInput,
+        instructionsSliderRating,
+        mainSliderRating,
+        instructionsDropdownChoice,
+        mainDropdownChoice,
+        instructionsRatingScale,
+        mainRatingScale,
+        instructionsSentenceChoice,
+        mainSentenceChoice,
+        instructionsImageSelection,
+        mainImageSelection,
+        instructionsKeyPress,
+        mainKeyPress,
+        postTest,
+        thanks
+    ];
 
 
     // prepare information about trials (procedure)
@@ -29,14 +31,16 @@ exp.customize = function() {
     
     // adds progress bars to the views listed
     // view's name is the same as object's name
-    this.progress_bar_in = ['mainForcedChoice',
-                            'mainTextboxInput',
-                            'mainSliderRating',
-                            'mainDropdownChoice',
-                            'mainRaitingScale',
-                            'mainSentenceChoice',
-                            'mainImageSelection',
-                            'mainKeyPress'];
+    this.progress_bar_in = [
+        'mainForcedChoice',
+        'mainTextboxInput',
+        'mainSliderRating',
+        'mainDropdownChoice',
+        'mainRaitingScale',
+        'mainSentenceChoice',
+        'mainImageSelection',
+        'mainKeyPress'
+    ];
     // styles: chunks, separate or default
     this.progress_bar_style = 'default';
     // the width of the progress bar or a single chunk

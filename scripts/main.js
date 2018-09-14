@@ -4,9 +4,9 @@ $('document').ready(function() {
     exp.init();
     // prevent scrolling when space is pressed (firefox does it)
     window.onkeydown = function(e) {
-    if (e.keyCode == 32 && e.target == document.body) {
-        e.preventDefault();
-    }
+        if (e.keyCode == 32 && e.target == document.body) {
+            e.preventDefault();
+        }
     };
 });
 
@@ -60,7 +60,6 @@ exp.init = function() {
     console.log("MTurk server: " + config_deploy.MTurk_server);
 };
 
-
 // navigation through the views and steps in each view;
 // shows each view (in the order defined in 'config_general') for
 // the given number of steps (as defined in 'config_general')
@@ -94,7 +93,7 @@ exp.submit = function() {
         var columns = [];
 
         for (var i=0; i<trialData.length; i++) {
-            for (prop in trialData[i]) {
+            for (var prop in trialData[i]) {
                 if ((trialData[i].hasOwnProperty(prop)) && (columns.indexOf(prop) === -1)) {
                     columns.push(prop);
                 }
@@ -138,6 +137,8 @@ exp.submit = function() {
 
         output += "<tbody><tr>";
 
+        var entry = "";
+
         for (var i = 0; i < trials.length; i++) {
             var currentTrial = trials[i];
             for (var trialKey in t) {
@@ -162,10 +163,27 @@ exp.submit = function() {
         return output;
     };
 
-    var flattenData = function(data){
+    var flattenData = function(data) {
         var trials = data.trials;
         delete data.trials;
-        var out = _.map(trials, function(t) {return _.merge(t, data);});
+        
+        // The easiest way to avoid name clash is just to check the keys one by one and rename them if necessary.
+        // Though I think it's also the user's responsibility to avoid such scenarios...
+        var sample_trial = trials[0];
+        for (var trial_key in sample_trial) {
+            if (sample_trial.hasOwnProperty(trial_key)) {
+                if (data.hasOwnProperty(trial_key)) {
+                    // Much easier to just operate it once on the data, since if we also want to operate on the trials we'd need to loop through each one of them.
+                    var new_data_key = "glb_" + trial_key;
+                    data[new_data_key] = data[trial_key];
+                    delete data[trial_key];
+                }
+            }
+        }
+        
+        var out = _.map(trials, function (t) {
+            return _.merge(t, data);
+        });
         return out;
     };
 
@@ -188,7 +206,6 @@ exp.submit = function() {
             HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
         }
 
-        console.log(HITData);
         return HITData;
     };
     
@@ -296,10 +313,14 @@ var prepareDataFromCSV = function(practiceTrialsFile, trialsFile) {
     return data;
 };
 
-loop = function(arr, count, shuffleFlag) {
-    return _.flatMapDeep(_.range(count), function(i) {return arr})
+var loop = function(arr, count, shuffleFlag) {
+    return _.flatMapDeep(_.range(count), function(i) {
+        return arr
+    })
 };
 
-loopShuffled = function(arr, count) {
-    return _.flatMapDeep(_.range(count), function(i) {return _.shuffle(arr)})
+var loopShuffled = function(arr, count) {
+    return _.flatMapDeep(_.range(count), function(i) {
+        return _.shuffle(arr)
+    })
 };
