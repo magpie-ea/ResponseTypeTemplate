@@ -189,9 +189,7 @@ exp.submit = function() {
 
     // construct data object for output
     var data = {
-        'author': config_deploy.author,
         'experiment_id': config_deploy.experimentID,
-        'description': config_deploy.description,
         'trials': addEmptyColumns(exp.trial_data)
     };
 

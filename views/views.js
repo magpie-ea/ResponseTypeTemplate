@@ -134,7 +134,7 @@ var mainSliderRating = {
     render : function(CT) {
         var viewTemplate = $('#trial-view-slider-response').html();
         var response;
-        $('#main').html(Mustache.render(view.template, {
+        $('#main').html(Mustache.render(viewTemplate, {
             question: exp.trial_info.main_trials.sliderRating[CT].question,
             option1: exp.trial_info.main_trials.sliderRating[CT].option1,
             option2: exp.trial_info.main_trials.sliderRating[CT].option2,
@@ -529,7 +529,7 @@ var mainKeyPress = {
 
         $('body').on('keydown', handleKeyPress);
     },
-    trials: 2
+    trials: 3
 };
 
 var postTest = {
