@@ -180,7 +180,7 @@ exp.submit = function() {
                 }
             }
         }
-        
+
         var out = _.map(trials, function (t) {
             return _.merge(t, data);
         });
